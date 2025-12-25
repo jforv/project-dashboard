@@ -403,7 +403,7 @@ export function ProjectTimeline({ viewOptions }: ProjectTimelineProps) {
       item.status === "done"
         ? "bg-teal-500/15 border-teal-500/40 text-teal-600"
         : item.status === "in-progress"
-          ? "bg-primary/15 border-primary/40 text-primary"
+          ? "bg-primary/10 border-primary/30 text-blue-800"
           : "bg-primary/10 border-primary/30 text-primary"
 
     return (
@@ -454,7 +454,7 @@ export function ProjectTimeline({ viewOptions }: ProjectTimelineProps) {
         </div>
         <div className="flex items-center gap-2">
           <span className="text-sm font-medium text-muted-foreground hidden sm:inline">
-            {viewStartDate.toLocaleString("vi", {
+            {viewStartDate.toLocaleString("en", {
               month: "long",
               year: "numeric",
             })}
@@ -530,21 +530,23 @@ export function ProjectTimeline({ viewOptions }: ProjectTimelineProps) {
         >
           <div className="relative min-w-max">
             {/* Timeline Header - Grid Layout */}
-            <div className="flex border-b bg-muted/30 border-border sticky top-0 z-20">
+            <div className="flex h-10 items-center border-b bg-muted/30 border-border sticky top-0 z-20">
               {/* Sticky Name Column Header */}
               <div
                 ref={nameColRef}
                 className={cn(
-                  "shrink-0 py-2 bg-muted/30 sticky left-0 z-30 border-r border-border/40 transition-all duration-300",
-                  isSidebarOpen ? "w-[280px] lg:w-[320px] px-4" : "w-0 overflow-hidden px-0 border-none",
+                  "shrink-0 bg-background sticky left-0 z-30 border-r border-border/20 transition-all duration-300 flex items-center",
+                  isSidebarOpen ? "w-[280px] lg:w-[320px]" : "w-0 overflow-hidden px-0 border-none",
                 )}
               >
-                <span className="text-xs font-medium text-muted-foreground">Name</span>
+                <div className="px-4">
+                  <span className="text-xs font-medium text-muted-foreground">Name</span>
+                </div>
               </div>
 
               {/* Scrollable Timeline Dates */}
-              <div className="relative shrink-0" style={{ width: timelineWidth }}>
-                <div className="flex" style={{ width: timelineWidth }}>
+              <div className="relative shrink-0 h-full" style={{ width: timelineWidth }}>
+                <div className="flex h-full items-center" style={{ width: timelineWidth }}>
                   {dates.map((day, i) => {
                     const isWeekend = day.getDay() === 0 || day.getDay() === 6
                     const showLabel =
@@ -566,14 +568,16 @@ export function ProjectTimeline({ viewOptions }: ProjectTimelineProps) {
                         style={{ width: cellWidth }}
                       >
                         {showLabel && (
-                          <span
-                            className={cn(
-                              "text-xs whitespace-nowrap",
-                              isToday(day) ? "text-primary font-semibold" : "text-muted-foreground",
-                            )}
-                          >
-                            {label}
-                          </span>
+                          <div className="h-full flex items-center justify-center">
+                            <span
+                              className={cn(
+                                "block text-xs whitespace-nowrap leading-none",
+                                isToday(day) ? "text-primary font-semibold" : "text-muted-foreground",
+                              )}
+                            >
+                              {label}
+                            </span>
+                          </div>
                         )}
                       </div>
                     )
@@ -584,13 +588,13 @@ export function ProjectTimeline({ viewOptions }: ProjectTimelineProps) {
             </div>
 
             {/* Project Rows with Sticky Name Column */}
-            <div className="flex flex-col relative z-0">
+            <div className="flex flex-col relative">
               {projects.map((project) => (
                 <div key={project.id} className="w-full flex flex-col">
                   <div className="flex h-[54px] group hover:bg-accent/20 relative border-b border-border/20">
                     <div
                       className={cn(
-                        "shrink-0 sticky left-0 z-30 bg-background border-r border-border/40 transition-all duration-300",
+                        "shrink-0 sticky left-0 z-30 bg-background border-r border-border/20 transition-all duration-300",
                         isSidebarOpen ? "w-[280px] lg:w-[320px]" : "w-0 overflow-hidden border-none",
                       )}
                     >
@@ -651,7 +655,7 @@ export function ProjectTimeline({ viewOptions }: ProjectTimelineProps) {
                       <div key={task.id} className="flex h-[54px] group hover:bg-accent/10 relative border-b border-border/20">
                         <div
                           className={cn(
-                            "shrink-0 sticky left-0 z-30 bg-background border-r border-border/40 transition-all duration-300",
+                            "shrink-0 sticky left-0 z-30 bg-background border-r border-border/20 transition-all duration-300",
                             isSidebarOpen ? "w-[280px] lg:w-[320px]" : "w-0 overflow-hidden border-none",
                           )}
                         >
