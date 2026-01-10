@@ -14,6 +14,7 @@ import { OutcomesList } from "@/components/projects/OutcomesList"
 import { KeyFeaturesColumns } from "@/components/projects/KeyFeaturesColumns"
 import { TimelineGantt } from "@/components/projects/TimelineGantt"
 import { RightMetaPanel } from "@/components/projects/RightMetaPanel"
+import { WorkstreamTab } from "@/components/projects/WorkstreamTab"
 import { ProjectWizard } from "@/components/project-wizard/ProjectWizard"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
@@ -149,9 +150,7 @@ export function ProjectDetailsPage({ projectId }: ProjectDetailsPageProps) {
                 </TabsContent>
 
                 <TabsContent value="workstream">
-                  <div className="rounded-lg border border-dashed border-border/70 bg-muted/30 px-4 py-10 text-center text-sm text-muted-foreground">
-                    Workstream view is upcoming.
-                  </div>
+                  <WorkstreamTab workstreams={project.workstreams} />
                 </TabsContent>
 
                 <TabsContent value="tasks">

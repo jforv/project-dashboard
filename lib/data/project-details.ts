@@ -35,6 +35,23 @@ export type TimelineTask = {
   status: "planned" | "in-progress" | "done"
 }
 
+export type WorkstreamTaskStatus = "todo" | "in-progress" | "done"
+
+export type WorkstreamTask = {
+  id: string
+  name: string
+  status: WorkstreamTaskStatus
+  dueLabel?: string
+  dueTone?: "danger" | "warning" | "muted"
+  assignee?: User
+}
+
+export type WorkstreamGroup = {
+  id: string
+  name: string
+  tasks: WorkstreamTask[]
+}
+
 export type TimeSummary = {
   estimateLabel: string
   dueDate: Date
@@ -68,6 +85,7 @@ export type ProjectDetails = {
   outcomes: string[]
   keyFeatures: KeyFeatures
   timelineTasks: TimelineTask[]
+  workstreams: WorkstreamGroup[]
   time: TimeSummary
   backlog: BacklogSummary
   quickLinks: QuickLink[]
@@ -108,6 +126,51 @@ function baseDetailsFromListItem(p: ProjectListItem): ProjectDetails {
       p1: ["Filters and empty states"],
       p2: ["Visual polish"],
     },
+    workstreams: [
+      {
+        id: `${p.id}-ws-1`,
+        name: "Initial discovery & alignment",
+        tasks: [
+          {
+            id: `${p.id}-ws-1-t1`,
+            name: "Kickoff with stakeholders",
+            status: "done",
+            dueLabel: "Today",
+            dueTone: "muted",
+            assignee: picUsers[0],
+          },
+          {
+            id: `${p.id}-ws-1-t2`,
+            name: "Define problem statement",
+            status: "in-progress",
+            dueLabel: "Tomorrow",
+            dueTone: "warning",
+            assignee: picUsers[0],
+          },
+          {
+            id: `${p.id}-ws-1-t3`,
+            name: "Collect existing assets",
+            status: "todo",
+          },
+        ],
+      },
+      {
+        id: `${p.id}-ws-2`,
+        name: "Design & validation",
+        tasks: [
+          {
+            id: `${p.id}-ws-2-t1`,
+            name: "Draft wireframes",
+            status: "todo",
+          },
+          {
+            id: `${p.id}-ws-2-t2`,
+            name: "Review with team",
+            status: "todo",
+          },
+        ],
+      },
+    ],
     timelineTasks: [
       {
         id: `${p.id}-t1`,
@@ -208,6 +271,115 @@ export function getProjectDetailsById(id: string): ProjectDetails {
       { id: "ql-1", name: "Proposal.pdf", type: "pdf", sizeMB: 13.0, url: "#" },
       { id: "ql-2", name: "Wireframe Layout.zip", type: "zip", sizeMB: 13.0, url: "#" },
       { id: "ql-3", name: "UI Kit.fig", type: "fig", sizeMB: 13.0, url: "#" },
+    ]
+
+    const primaryAssignee = details.backlog.picUsers[0]
+
+    details.workstreams = [
+      {
+        id: "1-ws-1",
+        name: "Processing documents for signing the deal",
+        tasks: [
+          {
+            id: "1-ws-1-t1",
+            name: "Processing documents for signing the deal",
+            status: "done",
+            dueLabel: "Today",
+            dueTone: "muted",
+            assignee: primaryAssignee,
+          },
+          {
+            id: "1-ws-1-t2",
+            name: "Internal approval & sign-off",
+            status: "todo",
+            dueLabel: "Today",
+            dueTone: "danger",
+            assignee: primaryAssignee,
+          },
+          {
+            id: "1-ws-1-t3",
+            name: "Send contract to client",
+            status: "todo",
+            dueLabel: "Tomorrow",
+            dueTone: "warning",
+            assignee: primaryAssignee,
+          },
+          {
+            id: "1-ws-1-t4",
+            name: "Track client signature",
+            status: "todo",
+            assignee: primaryAssignee,
+          },
+        ],
+      },
+      {
+        id: "1-ws-2",
+        name: "Client onboarding setup",
+        tasks: [
+          {
+            id: "1-ws-2-t1",
+            name: "Collect onboarding requirements",
+            status: "in-progress",
+            dueLabel: "This week",
+            dueTone: "muted",
+            assignee: primaryAssignee,
+          },
+          {
+            id: "1-ws-2-t2",
+            name: "Configure sandbox account",
+            status: "todo",
+            assignee: primaryAssignee,
+          },
+          {
+            id: "1-ws-2-t3",
+            name: "Schedule onboarding session",
+            status: "todo",
+            assignee: primaryAssignee,
+          },
+        ],
+      },
+      {
+        id: "1-ws-3",
+        name: "Product wireframe & review",
+        tasks: [
+          {
+            id: "1-ws-3-t1",
+            name: "Prepare low-fidelity wireframes",
+            status: "todo",
+            assignee: primaryAssignee,
+          },
+          {
+            id: "1-ws-3-t2",
+            name: "Review with stakeholders",
+            status: "todo",
+            assignee: primaryAssignee,
+          },
+        ],
+      },
+      {
+        id: "1-ws-4",
+        name: "Demo UI Concept",
+        tasks: [
+          {
+            id: "1-ws-4-t1",
+            name: "Prepare clickable prototype",
+            status: "todo",
+            assignee: primaryAssignee,
+          },
+        ],
+      },
+      {
+        id: "1-ws-5",
+        name: "Feedback and iteration with stakeholders",
+        tasks: [
+          {
+            id: "1-ws-5-t1",
+            name: "Collect feedback from stakeholders",
+            status: "todo",
+            assignee: primaryAssignee,
+          },
+        ],
+      },
     ]
   }
 
